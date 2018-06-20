@@ -1,0 +1,30 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "browse": {
+                "path": [
+                    "/Users/robertsmith/Library/Arduino15/packages/RedBear/hardware/nRF51822/1.0.8/cores/RBL_nRF51822",
+                    "/Users/robertsmith/Library/Arduino15/packages/RedBear/hardware/nRF51822/1.0.8/cores/.DS_Store",
+                    "${workspaceFolder}"
+                ],
+                "limitSymbolsToIncludedHeaders": false
+            },
+            "includePath": [
+                "/Users/robertsmith/Library/Arduino15/packages/RedBear/hardware/nRF51822/1.0.8/cores/RBL_nRF51822",
+                "/Users/robertsmith/Library/Arduino15/packages/RedBear/hardware/nRF51822/1.0.8/cores/.DS_Store",
+                "${workspaceFolder}"
+            ],
+            "defines": [],
+            "macFrameworkPath": [
+                "/System/Library/Frameworks",
+                "/Library/Frameworks"
+            ],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}
