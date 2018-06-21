@@ -1,30 +1,26 @@
+#include <Arduino.h>
+#include <ble/BLE.h>
+#include <ble/services/UARTService.h>
+
 #include "Types.h"
 #include "SmartLockService.h"
-#include "LockController.h"
-
-#define LOCK     P0_16 //4 // Key lock
-#define UNLOCK   P0_17 //5 // Key unlock
-#define LOCKED   P0_21 //6 // locked sensor
-#define UNLOCKED P0_23 //7 // unlocked sensor
 
 SmartLockService *smartLockServicePtr;
-UAR *smartLockServicePtr;
+UARTService *uartServicePtr;
 
-LockController lockController(UNLOCKED, LOCKED, LOCK, UNLOCK);
+#define DEBUG_EN 0
+
+#if DEBUG_EN
+  #define PRINT(VAL) Serial.println(VAL)
+#else
+  #define PRINT(VAL)
+#endif
 
 #include "BLEInit.h"
-#include "CAN.h"
-
-//long unsigned int rxId;
-//unsigned char len = 0;
-//unsigned char rxBuf[8];
-//char msgString[128];                        // Array to store serial string
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("Program Start");
-
-  setupCAN();
+  PRINT("Program Start");
 
   BLE &ble = BLE::Instance();
   ble.init(setupBLE);
@@ -37,6 +33,10 @@ void setup() {
 }
 
 void loop() {
-  proccessMessages();
   BLE::Instance().waitForEvent();
+
+  while (Serial.available()) {
+    uint8_t receivedByte = Serial.read();
+    uartServicePtr->write(&receivedByte, 1);
+  }
 }

@@ -1,3 +1,5 @@
 {
-    "board": "RedBear:nRF51822:nRF51822_32KB"
+    "board": "RedBear:nRF51822:nRF51822_32KB",
+    "sketch": "CarSmartsGateway/CarSmartsGateway.ino",
+    "port": "/dev/cu.usbmodem1432"
 }

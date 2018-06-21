@@ -3,14 +3,14 @@
 
 void connectionCallback(const Gap::ConnectionCallbackParams_t *params)
 {
-    Serial.println("Connected!");
+  PRINT("Connected!");
 }
 
 void disconnectionCallback(const Gap::DisconnectionCallbackParams_t *params) {
-  Serial.println("Disconnected..");
+  PRINT("Disconnected..");
   
   //TODO: More interesting auto-lock
-  lockController.performCommand(SLCommandLock);
+  // lockController.performCommand(SLCommandLock);
   
   BLE::Instance().gap().startAdvertising();
 };
@@ -21,15 +21,19 @@ void dataWrittenCallback(const GattWriteCallbackParams *params)
     if (params->len == 1) {
       SmartLockCommand command = (SmartLockCommand)params->data[0];
 
-      lockController.performCommand(command);
+      // lockController.performCommand(command);
     }
+  }
+  else if (params->handle == uartServicePtr->getTXCharacteristicHandle()) {
+    // New data written
+    Serial.write(params->data, params->len);
   }
 }
 
 void onBleInitError(BLE &ble, ble_error_t error)
 {
   /* Initialization error handling should go here */
-  Serial.println("BLE Init Error");
+  PRINT("BLE Init Error");
 }
 
 void setupAdvertising(BLE &ble) {
@@ -85,6 +89,7 @@ void setupBLE(BLE::InitializationCompleteCallbackContext *params)
 
   /* Setup primary service. */
   smartLockServicePtr = new SmartLockService(ble);
+  uartServicePtr = new UARTService(ble);
 
   /* setup advertising */
   setupAdvertising(ble);
